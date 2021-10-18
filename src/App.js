@@ -2,8 +2,10 @@ import React, { Component } from 'react';
 
 
 class App extends Component {
+  // Constructor:
+  // It used for initializing the local state of the component by assigning an object to this.state
+  // It used for binding event handler methods that occur in your component
   constructor(props){
-    // semicolons not required in javascript, but it is good practice as it makes code more readable
     super(props);
 
     this.state={
@@ -11,76 +13,78 @@ class App extends Component {
       list:[]
     };
   }
-
+  // Function that udpates the React state:
   updateInput(key, value){
-    // update react state
     this.setState({
       [key]: value
     });
   }
-  // create addItem function
+
+  // AddItem function for adding new items to the list:
   addItem(){
-    // first create a new item with a unique id
-    // const: cannot be redeclared, reassigned, and are only within its block's scope
+    // First create a new item with a unique ID
+    // Const: cannot be redeclared, reassigned, and are only within its block's scope
     const newItem = {
       id: 1 + Math.random(),
+      // Clone this array
       value: this.state.newItem.slice()
     };
-    // copy of current list items
+    // Copy of the current list items
     const list = [...this.state.list];
-
-    // add new item into list
+    // Add new item into list
     list.push(newItem);
-
-    // udpate state with new list and reset newItem input
+    // Udpate the state with new list and reset newItem input
     this.setState({
       list,
       newItem:""
     });
   }
+  // Function for deleting items in the list given the ID
   deleteItem(id){
-    // copy current list of items
+    // Copy current list of items
     const list = [...this.state.list];
-
-    // filter out item being deleted
-    // call filter, which will take in an item and return item.id, if it's not equal to the current id
+    // Filter out the item being deleted
+    // Call filter, which will take in an item and return item.id
+    // If it's not equal to the current id
     const updatedList = list.filter(item => item.id !== id);
-
+    // Set the state to the updated list
     this.setState({list: updatedList});
   }
   render(){
     return (
       <div className="App">
-        {/* create a div, which is basically a container */}
+        {/* Create a div element, which is basically a container */}
         <div>
           To-Do List
-          {/* line break element */}
+          {/* Line break element, to create space */}
           <br/>
-          {/* input form for adding items */}
+          {/* Input form, so we can type in new items to add to our to-do list */}
           <input
             type="text"
             placeholder="Type item here..."
-            // value will equal the new item that gets typed into input
+            // Value will equal the new item that gets typed into input form
             value = {this.state.newItem}
-            /* event that will call our function updateInput,
+            /* Event that will call our function updateInput,
             which will be a funciton that will have a new item and an event,
             which will be called everytime onChange is ran */
             onChange={e => this.updateInput("newItem", e.target.value)}
           />
           <button
-            // button will run function addItem every time it is clicked
+            // Button will run function addItem every time it is clicked
             onClick={() => this.addItem()}
           >
             Add
           </button>
           <br/>
+          {/* Create an unordered list that will display each item in our array as a list */}
           <ul>
           {this.state.list.map(item => {
             return(
+              // List each item in our array as a single item in a list
               <li key={item.id}>
                 {item.value}
                 <button
-                  // function which will delete the item
+                  // onClick event which will call the deleteItem function
                   onClick={() => this.deleteItem(item.id)}
                 >X</button>
               </li>
