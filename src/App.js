@@ -3,7 +3,7 @@ import "./App.css";
 
 // Change to class component
 // Class needs to extend the component class from the React Library
-class App extends Component {
+export default class App extends Component {
   // Constructor:
   // It used for initializing the local state of the component by assigning an object to this.state
   // It used for binding event handler methods that occur in your component
@@ -103,5 +103,3 @@ class App extends Component {
     );
   }
 }
-
-export default App;
